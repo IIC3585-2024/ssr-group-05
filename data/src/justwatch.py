@@ -51,7 +51,12 @@ def getStreamingData(jwEntityID):
 
   if response.status_code == 200:
     dataStreaming = response.json()
-    edge = dataStreaming['data']['streamingCharts']['edges'][0]
+    edge = dataStreaming['data']['streamingCharts'].get('edges', [])
+
+    if not edge:
+      return platforms
+
+    edge = edge[0]
     offers = edge['node'].get('offers', [])
     watchNowOffer = edge['node'].get('watchNowOffer', None)
     platforms = getPlatforms(offers, watchNowOffer)

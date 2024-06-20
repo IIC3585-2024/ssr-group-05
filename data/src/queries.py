@@ -4,7 +4,7 @@ queryPopularTitles = {
     "operationName": "GetPopularTitles",
     "variables": {
         "popularTitlesSortBy": "POPULAR",
-        "first": 5,
+        "first": 80,
         "platform": "WEB",
         "sortRandomSeed": 0,
         "popularAfterCursor": "NDA=",
