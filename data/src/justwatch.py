@@ -2,29 +2,33 @@ import requests
 from src.queries import queryStreaming, queryPopularTitles
 from src.tvmaze import getDataTVmaze
 from src.csvSaver import CsvSaver
+import src.constants as constants
+import uuid6
+
 
 url = "https://apis.justwatch.com/graphql"
-
 
 def loadPopularTitles():
   responsePopular = requests.post(url, json=queryPopularTitles)
 
   response = responsePopular
   if response.status_code == 200:
-    csvSaver = CsvSaver('src/series/series.csv')
-    currentData = csvSaver.get_unique_check()
+    csvSaver = CsvSaver()
+    currentSeries = csvSaver.get_unique_check(constants.series['path'], constants.series['col'])
+    currentPlatforms = csvSaver.get_unique_check(constants.platform['path'], constants.platform['col'])
+    currentGenres = csvSaver.get_unique_check(constants.genre['path'], constants.genre['col'])
+
     data = response.json()
     
     for edge in data['data']['popularTitles']['edges']:
       id = edge['node'].get('id', None)
+      serieUuid = uuid6.uuid6()
       content = edge['node'].get('content', None)
       
-      if not content or not id or id in currentData:
+      if not content or not id or id in currentSeries:
           continue
 
       title = edge['node']['content'].get('title', None)
-      imdbScore = edge['node']['content']['scoring'].get('imdbScore', None)
-      imdbVotes = edge['node']['content']['scoring'].get('imdbVotes', None)
       posterUrl = edge['node']['content'].get('posterUrl', None)
       genres = edge['node']['content'].get('genres', None)
 
@@ -32,12 +36,15 @@ def loadPopularTitles():
         posterUrl = 'https://images.justwatch.com' + posterUrl
 
       genres = getGenres(genres)
+      currentGenres = csvSaver.saveGenres(csvSaver, currentGenres, genres, serieUuid, constants.genre, constants.seriesGenre)
 
       platforms = getStreamingData(id)
+      currentPlatforms = csvSaver.savePlatforms(csvSaver, currentPlatforms, platforms, serieUuid, constants.platform, constants.seriesPlatform)
 
-      seasons = getDataTVmaze(title)
+      seasons, image, summary = getDataTVmaze(title)
 
-      csvSaver.save_data([id, title, imdbScore, imdbVotes, posterUrl, genres, platforms, seasons])
+      csvSaver.saveSeason(csvSaver, seasons, serieUuid, constants.season, constants.episode)
+      csvSaver.save_data(constants.series['path'], constants.series['headers'], [id, serieUuid, title, summary, posterUrl])
 
   else:
       print(f"Query failed with status code {response.status_code}")
