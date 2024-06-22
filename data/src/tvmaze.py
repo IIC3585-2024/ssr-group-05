@@ -1,11 +1,12 @@
 import requests
-import json
 
 
 url = 'https://api.tvmaze.com/singlesearch/shows?q={name}&embed=episodes'
 def getDataTVmaze(name):
   response = requests.get(url.format(name=name))
   episodes = None
+  image = None
+  summary = None
   
   if response.status_code == 200:
     data = response.json()
@@ -22,7 +23,7 @@ def getDataTVmaze(name):
   else:
     print(f"Query failed with status code {response.status_code}")
     
-  return episodes
+  return episodes, image, summary
 
 
 def getEpisodes(episodes):
