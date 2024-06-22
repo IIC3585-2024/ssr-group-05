@@ -3,7 +3,7 @@ from src.queries import queryStreaming, queryPopularTitles
 from src.tvmaze import getDataTVmaze
 from src.csvSaver import CsvSaver
 import src.constants as constants
-import json
+import uuid6
 
 
 url = "https://apis.justwatch.com/graphql"
@@ -19,10 +19,10 @@ def loadPopularTitles():
     currentGenres = csvSaver.get_unique_check(constants.genre['path'], constants.genre['col'])
 
     data = response.json()
-    i = 0
     
     for edge in data['data']['popularTitles']['edges']:
       id = edge['node'].get('id', None)
+      serieUuid = uuid6.uuid6()
       content = edge['node'].get('content', None)
       
       if not content or not id or id in currentSeries:
@@ -36,15 +36,15 @@ def loadPopularTitles():
         posterUrl = 'https://images.justwatch.com' + posterUrl
 
       genres = getGenres(genres)
-      currentGenres = csvSaver.saveGenres(csvSaver, currentGenres, genres, id, constants.genre, constants.seriesGenre)
+      currentGenres = csvSaver.saveGenres(csvSaver, currentGenres, genres, serieUuid, constants.genre, constants.seriesGenre)
 
       platforms = getStreamingData(id)
-      currentPlatforms = csvSaver.savePlatforms(csvSaver, currentPlatforms, platforms, id, constants.platform, constants.seriesPlatform)
+      currentPlatforms = csvSaver.savePlatforms(csvSaver, currentPlatforms, platforms, serieUuid, constants.platform, constants.seriesPlatform)
 
       seasons, image, summary = getDataTVmaze(title)
 
-      csvSaver.saveSeason(csvSaver, seasons, id, constants.season, constants.episode)
-      csvSaver.save_data(constants.series['path'], constants.series['headers'], [id, title, summary, posterUrl])
+      csvSaver.saveSeason(csvSaver, seasons, serieUuid, constants.season, constants.episode)
+      csvSaver.save_data(constants.series['path'], constants.series['headers'], [id, serieUuid, title, summary, posterUrl])
 
   else:
       print(f"Query failed with status code {response.status_code}")

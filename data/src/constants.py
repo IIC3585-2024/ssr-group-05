@@ -2,10 +2,11 @@ series = {
     'path': 'src/series/series.csv',
     'col': 0,
     'headers': [ 
+      'idPage',
       'id',
       'title',
-      'summary',
-      'posterUrl',
+      'description',
+      'imageUrl',
     ]
 }
 
