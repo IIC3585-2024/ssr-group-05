@@ -3,11 +3,10 @@ import { getSeries } from "@/app/series/actions";
 
 export default async function SerieList({search, stars, category, platform}: {search: string, stars: number, category: string, platform: string}) {
   const {data: series, error} = await getSeries({search, stars, category, platform});
-  console.log(series)
 
   return (
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 p-4">
-        {series?.map((serie) => (
+        {series?.map((serie:any) => (
           <SerieCard
             id={serie.id}
             key={serie.id}

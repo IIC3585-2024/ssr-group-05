@@ -1,17 +1,18 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
+import { PostgrestBuilder, PostgrestFilterBuilder, PostgrestQueryBuilder } from "@supabase/postgrest-js";
 
 export async function getSeries({ search, stars, category, platform }: { search: string, stars: number, category: string, platform: string}) {
   const client = createClient();
-  let query
-  const querySelect = await getSelectQuery({stars, category, platform});
+  let querySelect = "*"
+  querySelect = getSelectQuery({stars, category, platform});
 
-  query = client.from('series').select(querySelect) as any;
+  let query = client.from('series').select(querySelect) as PostgrestFilterBuilder<any, any, any, any, any>;
   
   if (search !== '') {
     query = query.ilike('title', `%${search}%`);
   }
-  if (stars !== -1){
+  if (stars !== -1) {
     query = query.gte('reviews.stars', stars);
   }
   if (category !== '') {
@@ -26,22 +27,23 @@ export async function getSeries({ search, stars, category, platform }: { search:
   return { data: series, error };
 }
 
-async function getSelectQuery({ stars, category, platform }: { stars: number, category: string, platform: string}){
-  let query = `*`
+
+function getSelectQuery({ stars, category, platform }: { stars: number, category: string, platform: string}) : string{
+  let query = '*'
   if (stars !== -1){
-    query += `,reviews!inner(stars)`
+    query += ',reviews!inner(stars)'
   }
   else {
-    query += `,reviews(stars)`
+    query += ',reviews(stars)'
   }
   if (category !== '') {
-    query += `,series_genres!inner(*, genre!inner(*))`
+    query += ',series_genres!inner(*, genre!inner(*))'
   }
   else {
-    query += `,series_genres(*, genre(*))`
+    query += ',series_genres(*, genre(*))'
   }
   if (platform !== '') {
-    query += `,series_platforms!inner(*, platforms!inner(*))`
+    query += ',series_platforms!inner(*, platforms!inner(*))'
   }
 
   return query
