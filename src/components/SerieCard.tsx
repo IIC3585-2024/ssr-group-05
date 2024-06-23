@@ -22,8 +22,8 @@ export default function SerieCard({
 }) {
   return (
     <Link href="/series/[id]" as={`/series/${id}`} >
-      <div className="flex flex-col items-center justify-between gap-2 p-2 bg-white shadow-md rounded-lg h-full transform duration-300 hover:scale-105 hover:bg-gray-200">
-        <div className="flex flex-col gap-2">
+      <div className="flex flex-col justify-between gap-2 p-2 bg-white shadow-md rounded-lg h-full transform duration-300 hover:scale-105 hover:bg-gray-200">
+        <div className="flex flex-col gap-2 self-center">
           <Image
             src={imageUrl}
             alt="Placeholder"
@@ -33,7 +33,7 @@ export default function SerieCard({
           />
           <h2 className="text-xl font-bold text-center">{title}</h2>
         </div>
-        <p className="text-sm">{description.slice(0, 50)}...</p>
+        <p className="text-sm self-center">{description.slice(0, 50)}...</p>
         <div className="flex gap-1 flex-wrap">
           {genres.map((genre) => (
             <div key={genre.id} className="bg-gray-300 rounded-lg p-0.5">
