@@ -49,11 +49,13 @@ export default async function Series() {
             placeholder="Categoría"
             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
           />
+          <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">
+            Image
+          </label>
           <input
-            type="text"
+            type="file"
             name="imageUrl"
             id="imageUrl"
-            placeholder="URL de la imagen"
             className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
           />
           <button
