@@ -20,7 +20,6 @@ export default function SerieCard({
   starsCount: number;
   imageUrl: string | undefined;
 }) {
-  console.log(genres);
   return (
     <Link href="/series/[id]" as={`/series/${id}`} >
       <div className="flex flex-col items-center justify-between gap-2 p-2 bg-white shadow-md rounded-lg h-full transform duration-300 hover:scale-105 hover:bg-gray-200">
@@ -37,7 +36,7 @@ export default function SerieCard({
         <p className="text-sm">{description.slice(0, 50)}...</p>
         <div className="flex gap-1 flex-wrap">
           {genres.map((genre) => (
-            <div className="bg-gray-300 rounded-lg p-0.5">
+            <div key={genre.id} className="bg-gray-300 rounded-lg p-0.5">
               <p className="text-sm">
                 {genre.genre.genre}
               </p>
