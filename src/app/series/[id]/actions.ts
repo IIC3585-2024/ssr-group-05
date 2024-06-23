@@ -5,7 +5,16 @@ import { revalidatePath } from "next/cache";
 export async function getSerieById(id: string) {
   const supabase = createClient();
   
-    const { data, error } = await supabase.from("series").select("*, reviews(*)").eq("id", id)
+    const { data, error } = await supabase.from("series")
+    .select(`*,
+      reviews(*),
+      seasons(*),
+      series_platforms(*,
+        platforms(*)),
+      series_genres(*,
+        genre(*))
+      `)
+    .eq("id", id)
     return { data, error };
 }
 
