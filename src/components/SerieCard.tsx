@@ -1,51 +1,51 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 
 export default function SerieCard({
   id,
   title,
-  streamingService,
-  seasons,
-  episodesPerSeason,
   description,
-  category,
+  genres,
   stars,
   starsCount,
   imageUrl = "/placeholder.jpeg",
 }: {
   id: string;
   title: string;
-  streamingService: string;
-  seasons: number;
-  episodesPerSeason: number;
   description: string;
-  category: string;
+  genres: any[];
   stars: string;
   starsCount: number;
-  imageUrl: string;
+  imageUrl: string | undefined;
 }) {
+  console.log(genres);
   return (
-    <Link href="/series/[id]" as={`/series/${id}`}>
-      <div className="flex flex-col items-center justify-between gap-2 p-2 bg-white shadow-md rounded-lg">
-        <Image
-          src={imageUrl}
-          alt="Placeholder"
-          width={200}
-          height={300}
-          className="rounded-lg"
-        />
-        <div className="flex flex-col justify-between gap-2">
+    <Link href="/series/[id]" as={`/series/${id}`} >
+      <div className="flex flex-col items-center justify-between gap-2 p-2 bg-white shadow-md rounded-lg h-full transform duration-300 hover:scale-105 hover:bg-gray-200">
+        <div className="flex flex-col gap-2">
+          <Image
+            src={imageUrl}
+            alt="Placeholder"
+            width={200}
+            height={300}
+            className="rounded-lg"
+          />
           <h2 className="text-xl font-bold text-center">{title}</h2>
-          <p className="text-sm">{streamingService}</p>
-          <p className="text-sm">Temporadas: {seasons}</p>
-          <p className="text-sm">
-            Episodios por temporada: {episodesPerSeason}
-          </p>
-          <p className="text-sm">{description.slice(0, 50)}...</p>
-          <div className="flex justify-between">
-            <p className="text-sm">{category}</p>
+        </div>
+        <p className="text-sm">{description.slice(0, 50)}...</p>
+        <div className="flex gap-1 flex-wrap">
+          {genres.map((genre) => (
+            <div className="bg-gray-300 rounded-lg p-0.5">
+              <p className="text-sm">
+                {genre.genre.genre}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-end w-full">
             <p className="text-sm">⭐️ {stars} ({starsCount})</p>
-          </div>
         </div>
       </div>
     </Link>

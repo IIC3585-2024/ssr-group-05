@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import ReviewForm from "./ReviewForm";
 
 export default function NewReview({
   serieId,
@@ -9,6 +10,7 @@ export default function NewReview({
   serieId: string;
   createReview: any;
 }) {
+  const [isOpen, setIsOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (formData: any) => {
@@ -16,16 +18,19 @@ export default function NewReview({
     formRef.current?.reset();
   };
 
-  return (
+  function openForm() {
+    setIsOpen(!isOpen);
+  }
+
+  return(
     <div>
-      <h2>Agregar review</h2>
-      <form ref={formRef} action={handleSubmit}>
-        <input type="hidden" name="serieId" value={serieId} />
-        <input type="text" name="title" id="title" placeholder="Título" />
-        <input type="text" name="content" id="content" placeholder="Contenido" />
-        <input type="number" name="stars" id="stars" placeholder="Estrellas" />
-        <button type="submit">Submit</button>
-      </form>
+      <button
+        onClick={openForm}
+        className="bg-blue-500 text-white rounded-lg p-2 mb-4 hover:bg-blue-600"
+      >
+        Escribir reseña
+      </button>
+      {isOpen && <ReviewForm serieId={serieId} handleSubmit={handleSubmit} formRef={formRef} />}
     </div>
-  );
+  )
 }
