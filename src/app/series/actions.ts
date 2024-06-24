@@ -1,6 +1,6 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
-import { PostgrestBuilder, PostgrestFilterBuilder, PostgrestQueryBuilder } from "@supabase/postgrest-js";
+import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
 
 export async function getSeries({ search, stars, category, platform }: { search: string, stars: number, category: string, platform: string}) {
   const client = createClient();

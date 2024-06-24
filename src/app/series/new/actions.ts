@@ -7,6 +7,12 @@ export async function createSerie(formData: FormData) {
 
     const imgFile = formData.get("imageUrl");
     const title = formData.get("title");
+    const description = formData.get("description");
+    const genres = JSON.parse(formData.get("genres") as string);
+    const platforms = JSON.parse(formData.get("platforms") as string);
+    const seasons = JSON.parse(formData.get("seasons") as string);
+
+    console.log(seasons);
 
     const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const storageUrl = baseUrl + (process.env.NEXT_PUBLIC_SUPABASE_STORAGE ?? '');
@@ -33,17 +39,42 @@ export async function createSerie(formData: FormData) {
       }
     }
 
-    await supabase.from("series").insert([
+    const serie = await supabase.from("series").insert([
       {
-        title: formData.get("title"),
-        // streamingService: formData.get("streamingService"),
-        // seasons: Number(formData.get("seasons")),
-        // episodesPerSeason: Number(formData.get("episodesPerSeason")),
-        description: formData.get("description"),
-        // category: formData.get("category"),
+        title: title,
+        description: description,
         imageUrl: imgUrl,
       },
-    ]);
+    ]).select();
+
+    const seasonDataArray = [];
+
+    if(serie.data) {
+      seasons.map((season: number, index: number) => {
+        seasonDataArray.push({
+          seriesId: serie.data[0].id,
+          seasonNumber: index + 1,
+          episodeCount: season,
+        });
+      });
+
+      const {error} = await supabase.from("seasons").insert(seasonDataArray);
+
+      const genreDataArray = genres.map((genre: string) => ({
+        seriesId: serie.data[0].id,
+        genreId: genre,
+      }));
+
+      await supabase.from("series_genres").insert(genreDataArray);
+
+      const platformDataArray = platforms.map((platform: any) => ({
+        seriesId: serie.data[0].id,
+        platformId: platform.id,
+        platformUrl: platform.url,
+      }));
+
+        await supabase.from("series_platforms").insert(platformDataArray);
+    }
     
     redirect("/series");
-  }
+}
