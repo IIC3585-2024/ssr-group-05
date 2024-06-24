@@ -22,9 +22,9 @@ export default function PlatformDropdown({platforms}: {platforms: any[] | null})
             <select
                 className="p-2 rounded w-full text-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 onChange={(event) => handlerChange(event.target.value)}
-                defaultValue={searchParams.get('platform')?.toString()}
+                defaultValue={searchParams.get('platform') || 'Plataforma'}
             >
-            <option key={1} selected={true}>
+            <option key={1}>
                 Plataforma
             </option>
                 {platforms?.map((platform) => (

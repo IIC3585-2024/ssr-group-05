@@ -24,8 +24,9 @@ export default function StarDropdown(){
             <select
                 className="p-2 rounded text-gray-400 w-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 onChange={(event) => handlerChange(event.target.value)}
+                value={searchParams.get('stars') || 'Calificación'}
             >
-            <option key={1} selected={true}>
+            <option key={1}>
                 Calificación
             </option>
                 {stars.map((star) => (

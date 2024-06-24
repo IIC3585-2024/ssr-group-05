@@ -48,7 +48,7 @@ export default async function SerieDetail({
           </p>
           <div className="flex flex-wrap mb-4">
             {serie.series_genres.map((genre: any) => (
-              <GenreTag key={genre.genre.id} genre={genre} />
+              <GenreTag key={genre.id} genre={genre.genre.genre} />
             ))}
           </div>
           <p className="my-4">
