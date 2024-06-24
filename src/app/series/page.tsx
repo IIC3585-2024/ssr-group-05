@@ -1,5 +1,4 @@
 import SerieList from "@/components/series/SerieList";
-import SerieListSkelleton from "@/components/shared/SkeletonList";
 import SearchInput from "@/components/series/filters/SearchInput";
 import StarDropdown from "@/components/series/filters/StarDropdown";
 import CategoryDropdown from "@/components/series/filters/CategoryDropdown";
@@ -8,6 +7,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { getGenres, getPlatforms } from "@/app/series/actions";
 import { createClient } from "@/utils/supabase/server";
+import SerieListSkelleton from "@/app/series/loading";
 
 export default async function Page({
   searchParams,
