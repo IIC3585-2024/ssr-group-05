@@ -7,39 +7,56 @@ import PlatformDropdown from "@/components/PlatformDropdown";
 import Link from "next/link";
 import { Suspense } from "react";
 import { getGenres, getPlatforms } from "@/app/series/actions";
+import { createClient } from "@/utils/supabase/server";
 
-export default async function Page({searchParams}
-: {
+export default async function Page({
+  searchParams,
+}: {
   searchParams?: {
-    search?: string,
-    stars?: string,
-    category?: string,
-    platform?: string,
+    search?: string;
+    stars?: string;
+    category?: string;
+    platform?: string;
   };
 }) {
-  const search = searchParams?.search || '';
-  const stars = Number(searchParams?.stars) || -1
-  const category = searchParams?.category || '';
-  const platform = searchParams?.platform || '';
+  const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
 
-  const {data: genres, error} = await getGenres();
-  const {data: platforms, error: errorPlatforms} = await getPlatforms();
+  const search = searchParams?.search || "";
+  const stars = Number(searchParams?.stars) || -1;
+  const category = searchParams?.category || "";
+  const platform = searchParams?.platform || "";
+
+  const { data: genres, error } = await getGenres();
+  const { data: platforms, error: errorPlatforms } = await getPlatforms();
 
   return (
     <div className="flex flex-col w-full min-h-screen full p-4 space-y-4 bg-gray-100">
-      <div className="flex flex-row justify-between px-6 py-5 bg-white rounded-lg mx-4">
-        <div className="flex flex-row space-x-10">
+      <div className="px-6 py-5 bg-white rounded-lg mx-4">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          {data?.user && (
+            <Link href="/series/new" className="flex flex-col sm:flex-row">
+              <button className="p-2 text-white bg-blue-500 rounded text-nowrap">
+                Agregar serie
+              </button>
+            </Link>
+          )}
           <StarDropdown />
           <SearchInput />
           <CategoryDropdown genres={genres} />
           <PlatformDropdown platforms={platforms} />
         </div>
-        <Link href="/series/new">
-          <button className="p-2 text-white bg-blue-500 rounded">Agregar serie</button>
-        </Link>
       </div>
-      <Suspense key={search + stars + category + platform} fallback={<SerieListSkelleton />}>
-        <SerieList search={search} stars={stars} category={category} platform={platform}/>
+      <Suspense
+        key={search + stars + category + platform}
+        fallback={<SerieListSkelleton />}
+      >
+        <SerieList
+          search={search}
+          stars={stars}
+          category={category}
+          platform={platform}
+        />
       </Suspense>
     </div>
   );

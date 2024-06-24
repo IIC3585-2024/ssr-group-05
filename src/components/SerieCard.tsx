@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -20,9 +20,8 @@ export default function SerieCard({
   starsCount: number;
   imageUrl: string | null;
 }) {
-
   return (
-    <Link href="/series/[id]" as={`/series/${id}`} >
+    <Link href="/series/[id]" as={`/series/${id}`}>
       <div className="flex flex-col justify-between gap-2 p-2 bg-white shadow-md rounded-lg h-full transform duration-300 hover:scale-105 hover:bg-gray-200">
         <div className="flex flex-col gap-2 self-center">
           <Image
@@ -38,14 +37,21 @@ export default function SerieCard({
         <div className="flex gap-1 flex-wrap">
           {genres.map((genre) => (
             <div key={genre.id} className="bg-gray-300 rounded-lg p-0.5">
-              <p className="text-sm">
-                {genre.genre.genre}
-              </p>
+              <p className="text-sm">{genre.genre.genre}</p>
             </div>
           ))}
         </div>
         <div className="flex justify-end w-full">
-            <p className="text-sm">⭐️ {stars} ({starsCount})</p>
+          <p className="text-sm">
+            <Image
+              src="/tomatoe.svg"
+              alt="tomatoe"
+              width={30}
+              height={30}
+              className="inline-block self-center items-center hover:animate-spin"
+            />{" "}
+            {stars} ({starsCount})
+          </p>
         </div>
       </div>
     </Link>

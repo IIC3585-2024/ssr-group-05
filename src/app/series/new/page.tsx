@@ -1,7 +1,13 @@
 import { createSerie } from "./actions";
+import { createClient } from "@/utils/supabase/client";
+import { redirect } from "next/navigation";
 
 export default async function Series() {
-
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.getUser();
+  if (!data?.user)  {
+    redirect("/auth/login");
+  }
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form className="w-full max-w-lg p-8 space-y-4 bg-white rounded shadow-md">

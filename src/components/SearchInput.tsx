@@ -23,7 +23,7 @@ export default function SearchInput() {
             <input
                 type="text"
                 placeholder="Buscar serie..."
-                className="p-2 rounded w-64 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="p-2 rounded w-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 onChange={(event) => handleSearch(event.target.value)}
                 defaultValue={searchParams.get('search')?.toString() || ''}
             />

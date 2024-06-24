@@ -20,7 +20,7 @@ export default function PlatformDropdown({platforms}: {platforms: any[] | null})
     return (
         <div className="flex items-center gap-2">
             <select
-                className="p-2 rounded w-48 text-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="p-2 rounded w-full text-gray-400 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 onChange={(event) => handlerChange(event.target.value)}
                 defaultValue={searchParams.get('platform')?.toString()}
             >

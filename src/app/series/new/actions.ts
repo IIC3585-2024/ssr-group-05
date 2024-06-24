@@ -29,13 +29,9 @@ export async function createSerie(formData: FormData) {
       imgUrl = storageUrl + imgUrl;
 
       if (error) {
-        console.error("Error uploading image: ", error);
         imgUrl = null;
       }
     }
-
-    console.log('la url de mi imagen es: ', imgUrl)
-
 
     await supabase.from("series").insert([
       {

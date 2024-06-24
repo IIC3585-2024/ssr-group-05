@@ -35,16 +35,11 @@ export default function ReviewForm({serieId, handleSubmit, formRef}: {serieId: s
                 name="stars"
                 className="border border-gray-300 rounded-lg p-2 mb-4"
               >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="5">6</option>
-                <option value="5">7</option>
-                <option value="5">8</option>
-                <option value="5">9</option>
-                <option value="5">10</option>
+                {
+                  Array.from({length: 10}, (_, i) => i + 1).map((star) => (
+                    <option key={star} value={star}>{star}</option>
+                  ))
+                }
               </select>
             </div>
           </div>
@@ -58,7 +53,7 @@ export default function ReviewForm({serieId, handleSubmit, formRef}: {serieId: s
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white rounded-lg p-2 w-1/4"
+            className="bg-blue-500 text-white rounded-lg w-fit p-2"
           >
             Enviar
           </button>
