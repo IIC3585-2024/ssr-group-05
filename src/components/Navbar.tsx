@@ -1,6 +1,7 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import Image from "next/image";
 
 import { redirect } from "next/navigation";
 
@@ -18,7 +19,15 @@ export default async function Navbar() {
   return (
     <div className="sticky top-0 z-50 flex items-center justify-between w-full h-16 px-4 bg-white shadow-md">
       <div className="flex items-center">
-        <p className="text-lg font-bold">Rotten&apos;tomatoes</p>
+        <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="cursor-pointer"
+            />
+        </Link>
       </div>
       <div className="flex items-center space-x-4">
         <Link href="/series">Series</Link>
