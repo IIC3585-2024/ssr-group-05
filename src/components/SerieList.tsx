@@ -16,7 +16,6 @@ export default async function SerieList({search, stars, category, platform}: {se
             stars={(serie.reviews.reduce((acc : number, review : any) => acc + review.stars, 0) / serie.reviews.length).toFixed(2)}
             starsCount={serie.reviews.length}
             imageUrl={serie.imageUrl}
-            
           />
         ))}
       </div>

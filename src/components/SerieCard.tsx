@@ -18,14 +18,15 @@ export default function SerieCard({
   genres: any[];
   stars: string;
   starsCount: number;
-  imageUrl: string | undefined;
+  imageUrl: string | null;
 }) {
+
   return (
     <Link href="/series/[id]" as={`/series/${id}`} >
       <div className="flex flex-col justify-between gap-2 p-2 bg-white shadow-md rounded-lg h-full transform duration-300 hover:scale-105 hover:bg-gray-200">
         <div className="flex flex-col gap-2 self-center">
           <Image
-            src={imageUrl}
+            src={imageUrl ? imageUrl : "/placeholder.jpeg"}
             alt="Placeholder"
             width={200}
             height={300}

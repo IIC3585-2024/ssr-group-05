@@ -15,6 +15,7 @@ export default async function SerieDetail({
   if (error) return <div className="text-red-500">Error loading serie</div>;
   if (!data) return <div className="text-gray-500">Loading...</div>;
   const serie = data[0];
+  const imgUrl = serie.imageUrl ? serie.imageUrl : "/placeholder.jpeg";
 
   const averageRating = (
     serie.reviews.reduce((acc: number, review: any) => acc + review.stars, 0) /
@@ -27,7 +28,7 @@ export default async function SerieDetail({
       <div className="flex">
         <div className="flex flex-col mr-6">
           <Image
-            src={"/placeholder.jpeg"}
+            src={imgUrl}
             alt="Placeholder"
             width={200}
             height={300}
