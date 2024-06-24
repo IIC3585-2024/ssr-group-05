@@ -1,5 +1,5 @@
 import { createSerie } from "./actions";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function Series() {

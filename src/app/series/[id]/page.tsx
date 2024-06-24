@@ -1,10 +1,10 @@
 import { getSerieById, createReview } from "./actions";
 import Image from "next/image";
-import NewReview from "@/components/NewReview";
-import ReviewCard from "@/components/ReviewCard";
-import SeasonTable from "@/components/SeasonTable";
-import PlatformList from "@/components/PlatformList";
-import GenreTag from "@/components/GenreTag";
+import NewReview from "@/components/reviews/NewReview";
+import ReviewCard from "@/components/reviews/ReviewCard";
+import SeasonTable from "@/components/series/seasons/SeasonTable";
+import PlatformList from "@/components/series/platforms/PlatformList";
+import GenreTag from "@/components/series/GenreTag";
 import { createClient } from "@/utils/supabase/server";
 
 export default async function SerieDetail({

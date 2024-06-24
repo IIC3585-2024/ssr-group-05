@@ -1,9 +1,9 @@
-import SerieList from "@/components/SerieList";
-import SerieListSkelleton from "@/components/SkeletonList";
-import SearchInput from "@/components/SearchInput";
-import StarDropdown from "@/components/StarDropdown";
-import CategoryDropdown from "@/components/CategoryDropdown";
-import PlatformDropdown from "@/components/PlatformDropdown";
+import SerieList from "@/components/series/SerieList";
+import SerieListSkelleton from "@/components/shared/SkeletonList";
+import SearchInput from "@/components/series/filters/SearchInput";
+import StarDropdown from "@/components/series/filters/StarDropdown";
+import CategoryDropdown from "@/components/series/filters/CategoryDropdown";
+import PlatformDropdown from "@/components/series/filters/PlatformDropdown";
 import Link from "next/link";
 import { Suspense } from "react";
 import { getGenres, getPlatforms } from "@/app/series/actions";
