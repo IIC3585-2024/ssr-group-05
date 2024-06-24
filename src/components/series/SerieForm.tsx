@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react";
-import GenreInput from "@/components/GenreInput";
-import PlatformInput from "@/components/PlatformInput";
-import SeasonInput from "@/components/SeasonInput";
+import GenreInput from "@/components/series/GenreInput";
+import PlatformInput from "@/components/series/PlatformInput";
+import SeasonInput from "@/components/series/SeasonInput";
 
 export default function Series({ genres, platforms, createSerie } : { genres: any, platforms:any, createSerie: any }) {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);

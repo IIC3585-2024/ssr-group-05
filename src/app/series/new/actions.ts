@@ -12,8 +12,6 @@ export async function createSerie(formData: FormData) {
     const platforms = JSON.parse(formData.get("platforms") as string);
     const seasons = JSON.parse(formData.get("seasons") as string);
 
-    console.log(seasons);
-
     const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const storageUrl = baseUrl + (process.env.NEXT_PUBLIC_SUPABASE_STORAGE ?? '');
 
@@ -47,7 +45,7 @@ export async function createSerie(formData: FormData) {
       },
     ]).select();
 
-    const seasonDataArray = [];
+    const seasonDataArray = [] as any[];
 
     if(serie.data) {
       seasons.map((season: number, index: number) => {

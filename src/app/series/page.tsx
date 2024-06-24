@@ -27,8 +27,8 @@ export default async function Page({
   const category = searchParams?.category || "";
   const platform = searchParams?.platform || "";
 
-  const { data: genres, error } = await getGenres();
-  const { data: platforms, error: errorPlatforms } = await getPlatforms();
+  const { genres, error } = await getGenres();
+  const { platforms, error: errorPlatforms } = await getPlatforms();
 
   return (
     <div className="flex flex-col w-full min-h-screen full p-4 space-y-4 bg-gray-100">

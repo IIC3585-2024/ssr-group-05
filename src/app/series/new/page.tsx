@@ -1,16 +1,16 @@
 import { getGenres, getPlatforms } from "@/app/series/actions";
-import SerieForm from "@/components/SerieForm";
+import SerieForm from "@/components/series/SerieForm";
 import { createSerie } from "./actions";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
 
 export default async function Series() {
-  const { data: genres, error } = await getGenres();
-  const { data: platforms, error: errorPlatforms } = await getPlatforms();
+  const { genres, error } = await getGenres();
+  const { platforms, error: errorPlatforms } = await getPlatforms();
   const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
-  
+  const { data, error: errorAuth } = await supabase.auth.getUser();
+
   if (!data?.user)  {
     redirect("/auth/login");
   }

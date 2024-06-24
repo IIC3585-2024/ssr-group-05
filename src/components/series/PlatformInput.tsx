@@ -57,12 +57,13 @@ export default function PlatformInput({ platforms, onPlatformsChange }: { platfo
                     placeholder="Url de la plataforma"
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
                     onChange={handleNewPlatformUrl}
+                    value={newPlatformUrl}
                 />
                 </div>
                 <button
                     onClick={addPlatform}
                     className="px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200 disabled:opacity-50"
-                    disabled={!newPlatformUrl | !newPlatform}
+                    disabled={!newPlatform || !newPlatformUrl}
                 >
                     Add platform
                 </button>
